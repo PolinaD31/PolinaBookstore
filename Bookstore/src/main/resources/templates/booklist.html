@@ -3,6 +3,7 @@
 <head>
 	<title>Books</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
 </head>
 <body>
 
@@ -26,6 +27,6 @@
 				<td class="btn btn-danger"><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>   
 			</tr>
 		</tbody>
-		<a href="/add">Add Book</a>  
 	</table>
+	<a href="/add" class="btn btn-success">Add Book</a>  
 </body>
