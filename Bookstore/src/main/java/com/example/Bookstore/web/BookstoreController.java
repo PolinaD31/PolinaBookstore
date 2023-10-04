@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.example.Bookstore.model.AppUserRepository;
 import com.example.Bookstore.model.Book;
 import com.example.Bookstore.model.BookstoreRepository;
 import com.example.Bookstore.model.CategoryRepository;
@@ -25,6 +27,9 @@ public class BookstoreController {
 	
 	@Autowired
 	private CategoryRepository crepository;
+	
+	@Autowired
+	private AppUserRepository urepository;
 	
 	@RequestMapping("/booklist")
 	public String bookList(Model model) {
@@ -44,12 +49,16 @@ public class BookstoreController {
     	return repository.findById(bookId);
     }       
 	
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
-		repository.deleteById(bookId);
-		return "redirect:../booklist";
+	//Why this doesn't work @PreAuthorize("hasRole('ADMIN')")
+	//And this does @PreAuthorize("hasAuthority('ADMIN')")
+	@PreAuthorize("hasAuthority('ADMIN')")
+    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    public String deleteBook(@PathVariable("id") Long bookId, Model model) {
+    	repository.deleteById(bookId);
+        return "redirect:../booklist";
 	}
 	
+	@PreAuthorize("hasAuthority('ADMIN')")
 	@RequestMapping(value = "/add")
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
@@ -62,4 +71,9 @@ public class BookstoreController {
 		repository.save(book);
 		return "redirect:booklist";
 	}
+	
+	@RequestMapping(value="/login")
+	public String login() {
+		return "login";
+	}    
 }

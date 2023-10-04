@@ -9,6 +9,8 @@ import com.example.Bookstore.model.Book;
 import com.example.Bookstore.model.BookstoreRepository;
 import com.example.Bookstore.model.Category;
 import com.example.Bookstore.model.CategoryRepository;
+import com.example.Bookstore.model.AppUser;
+import com.example.Bookstore.model.AppUserRepository;
 
 
 @SpringBootApplication
@@ -20,7 +22,7 @@ public class BookstoreApplication {
 	
 
 	@Bean
-	public CommandLineRunner demo(BookstoreRepository repository, CategoryRepository crepository) {
+	public CommandLineRunner demo(BookstoreRepository repository, CategoryRepository crepository, AppUserRepository urepository) {
 		return (args) -> {
 			
 			crepository.save(new Category("Non-fiction"));
@@ -31,6 +33,11 @@ public class BookstoreApplication {
 			
 			repository.save(b1);
 			repository.save(b2);
+			
+			AppUser user1 = new AppUser("user", "$2a$10$bvx8qywnVqJ1j8/h5SuKDeM3rmYYHId77VkcsDjc6nLrnyhAaGPt2", "user@gmail.com", "USER");
+			urepository.save(user1);
+			AppUser user2 = new AppUser("admin", "$2a$10$shAN7QoJnrCGzYkwQoyl9.iXtCDnW8/muroY9xKcMMtO5cuS.3Kki", "admin@gmail.com", "ADMIN");
+			urepository.save(user2);
 		};
 	}
 

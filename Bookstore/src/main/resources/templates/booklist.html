@@ -6,8 +6,20 @@
 	<link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" /> 
 </head>
 <body>
-
+	<div>
+	
 	<h1>Books</h1>
+	
+	<div class="col-md-4">
+        <span  sec:authentication="name">Name</span>
+
+	</div>
+	
+	<div class="col-md-4" style="padding:20px 0">
+		<form th:action="@{/logout}" method="post">
+			<input type="submit" value="Sign Out" class="btn btn-sm btn-danger"/>
+		</form>
+	</div>
 	
 	<table class="table table-striped">
 		<tbody>
@@ -18,6 +30,7 @@
 				<td>ISBN</td>
 				<td>Price</td>
 				<td>Department</td>
+				<th sec:authorize="hasAuthority('ADMIN')"> </th>
 			</tr>
 			<tr th:each="book : ${books}">
 				<td th:text="${book.title}"></td>
@@ -26,9 +39,10 @@
 				<td th:text="${book.isbn}"></td>
 				<td th:text="${book.price}"></td>
 				<td th:text="${book.category.name}"></td>
-				<td class="btn btn-danger"><a th:href="@{/delete/{id}(id=${book.id})}">Delete</a></td>   
+				<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/delete/{id}(id=${book.id})}" class="btn btn-xs btn-danger">Delete</a></td>
 			</tr>
 		</tbody>
 	</table>
-	<a href="/add" class="btn btn-success">Add Book</a>  
+	<td sec:authorize="hasAuthority('ADMIN')"><a href="/add" class="btn btn-success">Add Book</a></td>  
+	</div>
 </body>
