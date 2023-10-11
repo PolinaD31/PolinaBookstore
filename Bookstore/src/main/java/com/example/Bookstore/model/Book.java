@@ -7,8 +7,12 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
+
+// @Entity tells spring that this is a thing that needs to be saved to the database
+// Now spring knows to create a Table
 @Entity
 public class Book {
+	//@Id tells spring that this is a primary key
 	@Id 
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;

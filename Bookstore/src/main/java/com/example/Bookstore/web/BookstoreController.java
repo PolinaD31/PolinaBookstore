@@ -51,6 +51,7 @@ public class BookstoreController {
 	
 	//Why this doesn't work @PreAuthorize("hasRole('ADMIN')")
 	//And this does @PreAuthorize("hasAuthority('ADMIN')")
+	// Ask about DELETE method
 	@PreAuthorize("hasAuthority('ADMIN')")
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
     public String deleteBook(@PathVariable("id") Long bookId, Model model) {
